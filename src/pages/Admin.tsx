@@ -10,6 +10,7 @@ import { Edit, Eye, EyeOff, PlusCircle, Trash2 } from 'lucide-react';
 import { format } from 'date-fns';
 import { Post, useDeletePost } from '@/hooks/usePosts';
 import { cn } from '@/lib/utils';
+import { SiteMetrics } from '@/components/SiteMetrics';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -73,6 +74,13 @@ export default function Admin() {
             </Link>
           </Button>
         </div>
+
+        {/* Site Metrics */}
+        <div className="mb-10">
+          <SiteMetrics />
+        </div>
+
+        <h2 className="font-display text-xl font-semibold mb-4">Your Posts</h2>
 
         {isLoading ? (
           <div className="space-y-4">
