@@ -46,6 +46,18 @@ export function Header() {
             <Camera className="h-4 w-4 text-photography" />
             Photography
           </Link>
+          <Link 
+            to="/about" 
+            className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+          >
+            About
+          </Link>
+          <Link 
+            to="/contact" 
+            className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+          >
+            Contact
+          </Link>
         </nav>
 
         <div className="hidden md:flex items-center gap-4">
@@ -122,6 +134,20 @@ export function Header() {
             >
               <Camera className="h-4 w-4 text-photography" />
               Photography
+            </Link>
+            <Link 
+              to="/about" 
+              className="text-sm font-medium text-muted-foreground hover:text-foreground"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              About
+            </Link>
+            <Link 
+              to="/contact" 
+              className="text-sm font-medium text-muted-foreground hover:text-foreground"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Contact
             </Link>
             <div className="h-px bg-border my-2" />
             {user ? (

@@ -37,14 +37,19 @@ export function useCreateComment() {
   const { toast } = useToast();
 
   return useMutation({
-    mutationFn: async ({ postId, content, userId }: { postId: string; content: string; userId: string }) => {
+    mutationFn: async ({ postId, content, userId, guestName }: { postId: string; content: string; userId: string | null; guestName?: string }) => {
+      const insertData: { post_id: string; content: string; user_id?: string } = {
+        post_id: postId,
+        content,
+      };
+      
+      if (userId) {
+        insertData.user_id = userId;
+      }
+
       const { data, error } = await supabase
         .from('comments')
-        .insert({
-          post_id: postId,
-          content,
-          user_id: userId,
-        })
+        .insert(insertData)
         .select()
         .single();
 

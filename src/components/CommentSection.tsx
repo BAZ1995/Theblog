@@ -3,10 +3,10 @@ import { useAuth } from '@/lib/auth';
 import { useComments, useCreateComment, useDeleteComment } from '@/hooks/useComments';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
+import { Input } from '@/components/ui/input';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { MessageCircle, Trash2, User } from 'lucide-react';
 import { format } from 'date-fns';
-import { Link } from 'react-router-dom';
 
 interface CommentSectionProps {
   postId: string;
@@ -18,17 +18,20 @@ export function CommentSection({ postId }: CommentSectionProps) {
   const createComment = useCreateComment();
   const deleteComment = useDeleteComment();
   const [newComment, setNewComment] = useState('');
+  const [guestName, setGuestName] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newComment.trim() || !user) return;
+    if (!newComment.trim()) return;
 
     await createComment.mutateAsync({
       postId,
       content: newComment.trim(),
-      userId: user.id,
+      userId: user?.id || null,
+      guestName: !user ? guestName.trim() || 'Anonymous' : undefined,
     });
     setNewComment('');
+    setGuestName('');
   };
 
   const handleDelete = async (commentId: string) => {
@@ -42,30 +45,29 @@ export function CommentSection({ postId }: CommentSectionProps) {
         Comments ({comments.length})
       </h2>
 
-      {/* Comment Form */}
-      {user ? (
-        <form onSubmit={handleSubmit} className="mb-8">
-          <Textarea
-            placeholder="Share your thoughts..."
-            value={newComment}
-            onChange={(e) => setNewComment(e.target.value)}
-            className="mb-3 min-h-24 resize-none"
+      {/* Comment Form - Open to everyone */}
+      <form onSubmit={handleSubmit} className="mb-8">
+        {!user && (
+          <Input
+            placeholder="Your name (optional)"
+            value={guestName}
+            onChange={(e) => setGuestName(e.target.value)}
+            className="mb-3"
           />
-          <Button 
-            type="submit" 
-            disabled={!newComment.trim() || createComment.isPending}
-          >
-            {createComment.isPending ? 'Posting...' : 'Post Comment'}
-          </Button>
-        </form>
-      ) : (
-        <div className="bg-secondary/50 rounded-lg p-6 mb-8 text-center">
-          <p className="text-muted-foreground mb-3">Sign in to join the conversation</p>
-          <Button asChild variant="outline">
-            <Link to="/auth">Sign In</Link>
-          </Button>
-        </div>
-      )}
+        )}
+        <Textarea
+          placeholder="Share your thoughts..."
+          value={newComment}
+          onChange={(e) => setNewComment(e.target.value)}
+          className="mb-3 min-h-24 resize-none"
+        />
+        <Button 
+          type="submit" 
+          disabled={!newComment.trim() || createComment.isPending}
+        >
+          {createComment.isPending ? 'Posting...' : 'Post Comment'}
+        </Button>
+      </form>
 
       {/* Comments List */}
       {isLoading ? (
