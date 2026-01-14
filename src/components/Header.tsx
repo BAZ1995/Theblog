@@ -61,7 +61,7 @@ export function Header() {
         </nav>
 
         <div className="hidden md:flex items-center gap-4">
-          {user ? (
+          {user && (
             <>
               {isAdmin && (
                 <Button asChild variant="outline" size="sm">
@@ -97,10 +97,6 @@ export function Header() {
                 </DropdownMenuContent>
               </DropdownMenu>
             </>
-          ) : (
-            <Button asChild variant="default" size="sm">
-              <Link to="/auth">Sign In</Link>
-            </Button>
           )}
         </div>
 
@@ -150,7 +146,7 @@ export function Header() {
               Contact
             </Link>
             <div className="h-px bg-border my-2" />
-            {user ? (
+            {user && (
               <>
                 {isAdmin && (
                   <Link 
@@ -171,14 +167,6 @@ export function Header() {
                   Sign Out
                 </button>
               </>
-            ) : (
-              <Link 
-                to="/auth" 
-                className="text-sm font-medium"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Sign In
-              </Link>
             )}
           </nav>
         </div>

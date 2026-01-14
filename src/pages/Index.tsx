@@ -54,8 +54,11 @@ const Index = () => {
 
       {/* Footer */}
       <footer className="border-t border-border py-8">
-        <div className="container text-center text-sm text-muted-foreground">
+        <div className="container flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
           <p>© {new Date().getFullYear()} TheBlog. All rights reserved.</p>
+          <a href="/auth" className="hover:text-foreground transition-colors">
+            Admin Login
+          </a>
         </div>
       </footer>
     </div>
