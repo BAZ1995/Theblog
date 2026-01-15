@@ -29,7 +29,12 @@ export default function Admin() {
   const deletePost = useDeletePost();
 
   useEffect(() => {
-    if (!loading && (!user || !isAdmin)) {
+    // Only redirect after loading is complete AND we've confirmed no admin access
+    if (!loading && !user) {
+      navigate('/auth');
+    }
+    // Only check admin role if user exists and loading is complete
+    if (!loading && user && !isAdmin) {
       navigate('/auth');
     }
   }, [user, isAdmin, loading, navigate]);
