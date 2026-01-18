@@ -10,9 +10,9 @@ interface CategoryFilterProps {
 export function CategoryFilter({ category, onCategoryChange }: CategoryFilterProps) {
   const categories = [
     { id: 'all', label: 'All Posts', icon: Layers },
-    { id: 'cars', label: 'Cars', icon: Car },
     { id: 'tech', label: 'Tech', icon: Code2 },
     { id: 'photography', label: 'Photography', icon: Camera },
+    { id: 'cars', label: 'Cars', icon: Car },
   ];
 
   return (
